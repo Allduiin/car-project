@@ -56,25 +56,6 @@ public class Car {
         wheels.clear();
     }
 
-    public float getRealMaxSpeed() {
-        if (passengersInside == 0 || wheels.size() == 0) {
-            return 0;
-        }
-        float minTire = wheels.get(0).getTireState();
-        for (int i = 1; i < wheels.size(); i++) {
-            minTire = Math.min(minTire, wheels.get(i).getTireState());
-        }
-        return maxSpeed * minTire;
-    }
-
-    public void changeSpeed(long speed) {
-        if (speed > 0 && speed < getRealMaxSpeed()) {
-            currentSpeed = speed;
-        } else {
-            throw new CarCanNotDoException("Speed to change do not meet the credentials");
-        }
-    }
-
     public CarWheel getWheelById(int id) {
         return wheels.get(id);
     }
@@ -121,6 +102,10 @@ public class Car {
 
     public List<CarDoor> getDoors() {
         return doors;
+    }
+
+    public long getMaxSpeed() {
+        return maxSpeed;
     }
 
     public enum EngineType {

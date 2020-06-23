@@ -8,8 +8,11 @@ import org.junit.rules.ExpectedException;
 import project.car.exceptions.CarCanNotDoException;
 import project.car.model.Car;
 import project.car.model.CarWheel;
+import project.car.sevice.CarService;
+import project.car.sevice.impl.CarServiceImpl;
 
 public class CarTests {
+    private final CarService carService = new CarServiceImpl();
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
     private static Car car;
@@ -84,13 +87,13 @@ public class CarTests {
     }
 
     @Test
-    public void changeSpeedNormalTest(){
+    public void changeSpeedNormalTest() {
         if (car.getPassengersInside() <= 0) {
             car.setPassengersInside(1);
         }
         car.getWheels().add(new CarWheel());
-        car.changeSpeed(30);
-        Assert.assertEquals("Car must change speed",30, car.getCurrentSpeed());
+        carService.changeSpeed(30, car);
+        Assert.assertEquals("Car must change speed", 30, car.getCurrentSpeed());
     }
 
     @Test
@@ -104,7 +107,7 @@ public class CarTests {
         if (car.getWheels().size() == 0) {
             car.getWheels().add(new CarWheel());
         }
-        car.changeSpeed(500);
+        carService.changeSpeed(500, car);
     }
 
     @Test
@@ -118,7 +121,7 @@ public class CarTests {
         if (car.getWheels().size() == 0) {
             car.getWheels().add(new CarWheel());
         }
-        car.changeSpeed(-10);
+        carService.changeSpeed(-10, car);
     }
 
     @Test
@@ -132,18 +135,18 @@ public class CarTests {
         wheels.add(new CarWheel());
         wheels.get(0).setTireState(minTireOfWheel);
         Assert.assertEquals("Not correctly count of realMaxSpeed",
-                MAX_SPEED * minTireOfWheel, car.getRealMaxSpeed(), 0);
+                MAX_SPEED * minTireOfWheel, carService.getRealMaxSpeed(car), 0);
     }
 
     @Test
     public void getRealMaxSpeedWithOutPassengersTest() {
         car.setPassengersInside(0);
-        Assert.assertEquals("Car can't go without passengers", 0 , car.getRealMaxSpeed(), 0);
+        Assert.assertEquals("Car can't go without passengers", 0, carService.getRealMaxSpeed(car), 0);
     }
 
     @Test
     public void getRealMaxSpeedWithOutWheelsTest() {
         car.getWheels().clear();
-        Assert.assertEquals("Car can't go without passengers", 0 , car.getRealMaxSpeed(), 0);
+        Assert.assertEquals("Car can't go without passengers", 0, carService.getRealMaxSpeed(car), 0);
     }
 }

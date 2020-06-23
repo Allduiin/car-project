@@ -22,7 +22,7 @@ public class WheelTests {
         int percent = 50;
         carWheel.eraseTireByPercent(percent);
         Assert.assertEquals("Expected: " + (1 - (float) percent / 100),
-                1 - (float) percent / 100, carWheel.getTireState(),  0f);
+                1 - (float) percent / 100, carWheel.getTireState(), 0f);
     }
 
     @Test
