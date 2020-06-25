@@ -32,5 +32,5 @@ ORDER BY c.customer_id;
 SELECT DPT_NAME
 FROM emp_department dep
 INNER JOIN emp_details e_det ON dep.DPT_CODE = e_det.EMP_DEPT
-WHERE COUNT(DISTINCT DPT_NAME) > 2;
 GROUP BY DPT_NAME;
+HAVING COUNT(*) > 2;
